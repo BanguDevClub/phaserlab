@@ -1,158 +1,99 @@
-# Phaser Vite TypeScript Template
+# PhaserLab - 2D Turn-Based Rogue-like Labyrinth RPG
 
-This is a Phaser project template that uses Vite for bundling. It supports hot-reloading for quick development workflow, includes TypeScript support and scripts to generate production-ready builds.
+[![Phaser 4](https://img.shields.io/badge/Engine-Phaser%204-0284c7.svg)](https://github.com/phaserjs/phaser)
+[![TypeScript 5.7](https://img.shields.io/badge/Language-TypeScript%205.7-3178c6.svg)](https://www.typescriptlang.org/)
+[![Vite 6](https://img.shields.io/badge/Bundler-Vite%206-646cff.svg)](https://vitejs.dev/)
 
-**[This Template is also available as a JavaScript version.](https://github.com/phaserjs/template-vite)**
+**PhaserLab** is an expansive, turn-based 2D Rogue-like RPG featuring 30 procedurally generated labyrinth floors, a 50-monster Bestiary with 5 rarity tiers, item/spell mastery systems, local save management, and responsive fullscreen gameplay.
 
-### Versions
+---
 
-This template has been updated for:
+## 🎮 Game Features
 
-- [Phaser 4](https://github.com/phaserjs/phaser)
-- [Vite 6.3.1](https://github.com/vitejs/vite)
-- [TypeScript 5.7.2](https://github.com/microsoft/TypeScript)
+### 🏰 Procedural Labyrinth & 3 Zones
+- **30 Floors of Labyrinth**: Procedurally generated room layouts, corridors, stairs, items, and monster spawns.
+- **Dynamic Floor Dimensions**:
+  - **Floors 1–9**: 50×50 Ancient Stone Dungeon *(Palette: Blue/Slate)*
+  - **Floors 10–19**: 100×100 Crystal Caverns *(Palette: Purple/Amethyst)*
+  - **Floors 20–30**: 200×200 Infernal Abyssal Depths *(Palette: Dark Crimson/Obsidian)*
+- **3 Synthesized Zone Soundtracks**: Unique procedural retro synth tracks that automatically switch per zone.
 
-![screenshot](screenshot.png)
+---
 
-## Requirements
+### 👹 Bestiary & Rarity Tiers (50 Monsters)
+Monsters scale with floor depth and are categorized into 5 explicit rarity tiers:
+1. 🟢 **COMMON** (Min stats: 50 HP / 10 ATK / 10 DEF) — *Goblin Scout, Giant Cave Rat, Acid Slime, Orc Warrior*
+2. 🟢 **UNCOMMON** (Min stats: 100 HP / 15 ATK / 15 DEF) — *Orc Shaman, Stone Gargoyle, Lich Initiate, Fire Elemental*
+3. 🔵 **RARE** (Min stats: 150 HP / 20 ATK / 20 DEF) — *Minotaur Berserker, Gorgon Medusa, Elder Beholder, Fenrir*
+4. 🟣 **EPIC** (Min stats: 500 HP / 50 ATK / 50 DEF) — *Dragon Fafnir, Arch-Demon Baal, Kraken Abyssal, Mephistopheles*
+5. 🟡 **LEGENDARY** (Min stats: 1000 HP / 100 ATK / 100 DEF) — *Lucifer Morningstar, Tiamat, Cronos, Satan, Demogorgon*
 
-[Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
+---
 
-## Available Commands
+### ⭐ Item & Spell Mastery Systems
+- **Item Mastery**: Collect duplicate equipment to manually upgrade item ranks (+20% stat bonus per rank).
+- **Spell Mastery**: Collect duplicate scrolls to manually upgrade spell ranks (-15% MP cost, +25% Power per rank).
+- **Inventory Filters**: Filter inventory by Item Type (*Weapons, Armor, Rings, Scrolls*) and Rarity (*Common, Uncommon, Rare, Epic, Legendary*).
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install project dependencies |
-| `npm run dev` | Launch a development web server |
-| `npm run build` | Create a production build in the `dist` folder |
-| `npm run dev-nolog` | Launch a development web server without sending anonymous data (see "About log.js" below) |
-| `npm run build-nolog` | Create a production build in the `dist` folder without sending anonymous data (see "About log.js" below) |
+---
 
-## Writing Code
+### 💾 Unlimited Save Manager & Pause Menu
+- **LocalStorage Save Engine**: Save and load your complete game state anytime (hero stats, equipment, inventory, map layout, explored tiles, living monsters, dropped items).
+- **Pause Menu (`ENTER` / `ESC`)**: Quick pause menu to resume game, access saves, adjust settings, or return to the main menu.
+- **Map Exploration Statistic**: Live percentage calculation of floor tiles explored (`MAP X%`).
 
-After cloning the repo, run `npm install` from your project directory. Then, you can start the local development server by running `npm run dev`.
+---
 
-The local development server runs on `http://localhost:8080` by default. Please see the Vite documentation if you wish to change this, or add SSL support.
+## 🕹️ Controls & Key Bindings
 
-Once the server is running you can edit any of the files in the `src` folder. Vite will automatically recompile your code and then reload the browser.
+| Action | Key / Input |
+| :--- | :--- |
+| **Move North / Attack** | `W` or `Up Arrow` |
+| **Move South / Attack** | `S` or `Down Arrow` |
+| **Move West / Attack** | `A` or `Left Arrow` |
+| **Move East / Attack** | `D` or `Right Arrow` |
+| **Open Inventory** | `E` |
+| **Open Spellbook** | `Q` |
+| **Wait Turn (Restore HP/MP)** | `Space` |
+| **Pause Menu & Save/Load** | `ENTER` or `ESC` |
+| **Target Spell Casting** | Left Pointer Click on visible tile |
 
-## Template Project Structure
+---
 
-We have provided a default project structure to get you started. This is as follows:
+## 💻 Tech Stack & Architecture
 
-## Template Project Structure
+- **Engine**: Phaser 4 (2D Canvas / WebGL rendering via OOP Scene architecture)
+- **Language**: TypeScript 5.7+ with strict type checking
+- **Bundler & Server**: Vite 6.3+
+- **Audio Engine**: Web Audio API Procedural Synthesizer (`AudioManager`)
+- **Persistence**: HTML5 `localStorage` JSON Serialization Engine (`SaveManager`)
 
-We have provided a default project structure to get you started:
+---
 
-| Path                         | Description                                                |
-|------------------------------|------------------------------------------------------------|
-| `index.html`                 | A basic HTML page to contain the game.                     |
-| `public/assets`              | Game sprites, audio, etc. Served directly at runtime.      |
-| `public/style.css`           | Global layout styles.                                      |
-| `src/main.ts`                | Application bootstrap.                                     |
-| `src/game`                   | Folder containing the game code.                           |
-| `src/game/main.ts`           | Game entry point: configures and starts the game.          |
-| `src/game/scenes`            | Folder with all Phaser game scenes.                        | 
+## 🚀 Getting Started
 
+### Requirements
+- [Node.js](https://nodejs.org) (v18+ recommended)
+- [pnpm](https://pnpm.io/) or `npm`
 
-## Handling Assets
-
-Vite supports loading assets via JavaScript module `import` statements.
-
-This template provides support for both embedding assets and also loading them from a static folder. To embed an asset, you can import it at the top of the JavaScript file you are using it in:
-
-```js
-import logoImg from './assets/logo.png'
-```
-
-To load static files such as audio files, videos, etc place them into the `public/assets` folder. Then you can use this path in the Loader calls within Phaser:
-
-```js
-preload ()
-{
-    //  This is an example of an imported bundled image.
-    //  Remember to import it at the top of this file
-    this.load.image('logo', logoImg);
-
-    //  This is an example of loading a static image
-    //  from the public/assets folder:
-    this.load.image('background', 'assets/bg.png');
-}
-```
-
-When you issue the `npm run build` command, all static assets are automatically copied to the `dist/assets` folder.
-
-## Deploying to Production
-
-After you run the `npm run build` command, your code will be built into a single bundle and saved to the `dist` folder, along with any other assets your project imported, or stored in the public assets folder.
-
-In order to deploy your game, you will need to upload *all* of the contents of the `dist` folder to a public facing web server.
-
-## Customizing the Template
-
-### Vite
-
-If you want to customize your build, such as adding plugin (i.e. for loading CSS or fonts), you can modify the `vite/config.*.mjs` file for cross-project changes, or you can modify and/or create new configuration files and target them in specific npm tasks inside of `package.json`. Please see the [Vite documentation](https://vitejs.dev/) for more information.
-
-## About log.js
-
-If you inspect our node scripts you will see there is a file called `log.js`. This file makes a single silent API call to a domain called `gryzor.co`. This domain is owned by Phaser Studio Inc. The domain name is a homage to one of our favorite retro games.
-
-We send the following 3 pieces of data to this API: The name of the template being used (vue, react, etc). If the build was 'dev' or 'prod' and finally the version of Phaser being used.
-
-At no point is any personal data collected or sent. We don't know about your project files, device, browser or anything else. Feel free to inspect the `log.js` file to confirm this.
-
-Why do we do this? Because being open source means we have no visible metrics about which of our templates are being used. We work hard to maintain a large and diverse set of templates for Phaser developers and this is our small anonymous way to determine if that work is actually paying off, or not. In short, it helps us ensure we're building the tools for you.
-
-However, if you don't want to send any data, you can use these commands instead:
-
-Dev:
+### Commands
 
 ```bash
-npm run dev-nolog
+# 1. Install dependencies
+pnpm install
+
+# 2. Start local development server
+pnpm dev
+
+# 3. Type check code
+pnpm check
+
+# 4. Build production bundle
+pnpm build-nolog
 ```
 
-Build:
+The dev server will run at `http://localhost:8080/`.
 
-```bash
-npm run build-nolog
-```
+---
 
-Or, to disable the log entirely, simply delete the file `log.js` and remove the call to it in the `scripts` section of `package.json`:
-
-Before:
-
-```json
-"scripts": {
-    "dev": "node log.js dev & dev-template-script",
-    "build": "node log.js build & build-template-script"
-},
-```
-
-After:
-
-```json
-"scripts": {
-    "dev": "dev-template-script",
-    "build": "build-template-script"
-},
-```
-
-Either of these will stop `log.js` from running. If you do decide to do this, please could you at least join our Discord and tell us which template you're using! Or send us a quick email. Either will be super-helpful, thank you.
-
-## Join the Phaser Community!
-
-We love to see what developers like you create with Phaser! It really motivates us to keep improving. So please join our community and show-off your work 😄
-
-**Visit:** The [Phaser website](https://phaser.io) and follow on [Phaser Twitter](https://twitter.com/phaser_)<br />
-**Play:** Some of the amazing games [#madewithphaser](https://twitter.com/search?q=%23madewithphaser&src=typed_query&f=live)<br />
-**Learn:** [API Docs](https://newdocs.phaser.io), [Support Forum](https://phaser.discourse.group/) and [StackOverflow](https://stackoverflow.com/questions/tagged/phaser-framework)<br />
-**Discord:** Join us on [Discord](https://discord.gg/phaser)<br />
-**Code:** 2000+ [Examples](https://labs.phaser.io)<br />
-**Read:** The [Phaser World](https://phaser.io/community/newsletter) Newsletter<br />
-
-Created by [Phaser Studio](mailto:support@phaser.io). Powered by coffee, anime, pixels and love.
-
-The Phaser logo and characters are &copy; 2011 - 2025 Phaser Studio Inc.
-
-All rights reserved.
+Developed with passion for classic rogue-like games. Powered by Phaser 4, TypeScript, and Vite.
