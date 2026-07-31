@@ -26,6 +26,14 @@ export interface PlayerSaveData {
     learnedSpells: string[];
     itemMastery: Record<string, number>;
     spellMastery: Record<string, number>;
+    // Stats tracking
+    totalDamageDealt?: number;
+    totalTurns?: number;
+    totalMonstersKilled?: number;
+    itemsPickedUp?: number;
+    spellsCast?: number;
+    totalDamageTaken?: number;
+    totalHealthHealed?: number;
 }
 
 export interface SerializedMonster {
@@ -110,7 +118,14 @@ export class SaveManager {
             inventory: player.inventory,
             learnedSpells: player.learnedSpells,
             itemMastery: player.itemMastery,
-            spellMastery: player.spellMastery
+            spellMastery: player.spellMastery,
+            totalDamageDealt: player.totalDamageDealt,
+            totalTurns: player.totalTurns,
+            totalMonstersKilled: player.totalMonstersKilled,
+            itemsPickedUp: player.itemsPickedUp,
+            spellsCast: player.spellsCast,
+            totalDamageTaken: player.totalDamageTaken,
+            totalHealthHealed: player.totalHealthHealed
         };
 
         let levelData: LevelSaveData | undefined = undefined;
@@ -204,5 +219,13 @@ export class SaveManager {
         player.learnedSpells = saveData.learnedSpells || [];
         player.itemMastery = saveData.itemMastery || {};
         player.spellMastery = saveData.spellMastery || {};
+
+        player.totalDamageDealt = saveData.totalDamageDealt || 0;
+        player.totalTurns = saveData.totalTurns || 0;
+        player.totalMonstersKilled = saveData.totalMonstersKilled || 0;
+        player.itemsPickedUp = saveData.itemsPickedUp || 0;
+        player.spellsCast = saveData.spellsCast || 0;
+        player.totalDamageTaken = saveData.totalDamageTaken || 0;
+        player.totalHealthHealed = saveData.totalHealthHealed || 0;
     }
 }

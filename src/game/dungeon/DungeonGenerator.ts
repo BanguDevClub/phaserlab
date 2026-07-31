@@ -121,7 +121,7 @@ export class DungeonGenerator {
         for (let i = 1; i < rooms.length; i++) {
             const room = rooms[i];
             
-            // Increased Monster spawn rate per room (2 to 4+ monsters per room)
+            // Monster spawn rate per room (2 to 4+ monsters per room)
             const monsterCount = Math.floor(Math.random() * 3) + 2 + Math.floor(floor / 4);
             for (let m = 0; m < monsterCount; m++) {
                 const mx = Math.floor(Math.random() * (room.width - 2)) + room.x + 1;
@@ -132,11 +132,13 @@ export class DungeonGenerator {
                 }
             }
 
-            // Rarer item chest spawn logic (22% chance per room)
-            if (Math.random() < 0.22) {
+            // Room item spawn logic (1 to 4 items per room)
+            const itemNum = Math.floor(Math.random() * 4) + 1;
+            for (let it = 0; it < itemNum; it++) {
                 const ix = Math.floor(Math.random() * (room.width - 2)) + room.x + 1;
                 const iy = Math.floor(Math.random() * (room.height - 2)) + room.y + 1;
-                if (tiles[iy][ix] === TileType.FLOOR && !(ix === stairPos.x && iy === stairPos.y)) {
+                const isTileOccupied = itemSpawns.some(s => s.x === ix && s.y === iy) || (ix === stairPos.x && iy === stairPos.y) || (ix === playerStart.x && iy === playerStart.y);
+                if (tiles[iy][ix] === TileType.FLOOR && !isTileOccupied) {
                     itemSpawns.push({ x: ix, y: iy });
                 }
             }

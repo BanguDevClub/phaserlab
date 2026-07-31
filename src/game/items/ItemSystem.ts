@@ -50,6 +50,14 @@ export const RARITY_COLORS: Record<ItemRarity, number> = {
 
 export class ItemSystem {
 
+    public static getHigherRarity(rarity: ItemRarity): ItemRarity {
+        if (rarity === 'COMMON') return 'UNCOMMON';
+        if (rarity === 'UNCOMMON') return 'RARE';
+        if (rarity === 'RARE') return 'EPIC';
+        if (rarity === 'EPIC') return 'LEGENDARY';
+        return 'LEGENDARY';
+    }
+
     // Structured Item Catalog classified by Rarity (Matching Bestiary structure)
     public static readonly ITEMS: ItemTemplate[] = [
         // ==========================================
@@ -95,39 +103,54 @@ export class ItemSystem {
             description: "Ancient scroll containing the spell secrets of Heal. Read ('E') to master the spell.",
             atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "HEAL"
         },
+        {
+            name: "Scroll of Poison Dart", type: "SCROLL", rarity: "COMMON",
+            description: "Ancient scroll containing the spell secrets of Poison Dart. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "POISON_DART"
+        },
 
         // ==========================================
-        // 2. UNCOMMON ITEMS
+        // 2. UNCOMMON ITEMS (Minor Historical & Religious Trinkets)
         // ==========================================
         {
-            name: "Steel Longsword", type: "SWORD", rarity: "UNCOMMON",
-            description: "Finely honed steel longsword with a polished crossguard.",
+            name: "Roman Gladius", type: "SWORD", rarity: "UNCOMMON",
+            description: "Short double-edged iron blade wielded by Roman Legionaries.",
             atk: 18, def: 4, hp: 0, mp: 0
         },
         {
-            name: "Knight Lance", type: "LANCE", rarity: "UNCOMMON",
-            description: "Heavy steel lance designed for high impact strikes.",
-            atk: 22, def: 0, hp: 0, mp: 0
+            name: "Egyptian Khopesh", type: "SWORD", rarity: "UNCOMMON",
+            description: "Curved sickle-sword forged for ancient Pharaoh vanguards.",
+            atk: 20, def: 3, hp: 10, mp: 0
         },
         {
-            name: "Battle Axe", type: "AXE", rarity: "UNCOMMON",
-            description: "Double-bladed steel battle axe built to crush shields.",
-            atk: 25, def: 0, hp: 25, mp: 0
+            name: "Viking Ulfberht", type: "SWORD", rarity: "UNCOMMON",
+            description: "High-carbon crucible steel blade famed in Norse saga legends.",
+            atk: 22, def: 2, hp: 0, mp: 15
         },
         {
-            name: "Reinforced Helm", type: "HELMET", rarity: "UNCOMMON",
-            description: "Steel helmet fitted with a protective visor.",
-            atk: 0, def: 15, hp: 30, mp: 0
-        },
-        {
-            name: "Chainmail Coat", type: "ARMOR", rarity: "UNCOMMON",
-            description: "Interlocking steel rings capable of deflecting blade strikes.",
+            name: "Spartan Hoplon", type: "ARMOR", rarity: "UNCOMMON",
+            description: "Heavy bronze-faced wooden shield of Spartan phalanx warriors.",
             atk: 0, def: 22, hp: 45, mp: 0
         },
         {
-            name: "Silver Signet", type: "RING", rarity: "UNCOMMON",
-            description: "Polished silver signet ring enhancing battle focus.",
-            atk: 6, def: 4, hp: 0, mp: 35
+            name: "Crusader Greathelm", type: "HELMET", rarity: "UNCOMMON",
+            description: "Cylindrical steel helm bearing a brass cross visor.",
+            atk: 0, def: 18, hp: 35, mp: 0
+        },
+        {
+            name: "Frankish Francisca", type: "AXE", rarity: "UNCOMMON",
+            description: "Balanced throwing battleaxe used by early Frankish tribes.",
+            atk: 25, def: 0, hp: 20, mp: 0
+        },
+        {
+            name: "Byzantine Chainmail", type: "ARMOR", rarity: "UNCOMMON",
+            description: "Interlocking iron ring mail worn by Eastern Roman cataphracts.",
+            atk: 0, def: 24, hp: 50, mp: 0
+        },
+        {
+            name: "Scarab of Ra", type: "RING", rarity: "UNCOMMON",
+            description: "Egyptian lapis amulet representing rebirth and solar energy.",
+            atk: 5, def: 5, hp: 25, mp: 40
         },
         {
             name: "Scroll of Ice Spike", type: "SCROLL", rarity: "UNCOMMON",
@@ -135,48 +158,63 @@ export class ItemSystem {
             atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "ICE_SPIKE"
         },
         {
-            name: "Scroll of Poison Dart", type: "SCROLL", rarity: "UNCOMMON",
-            description: "Ancient scroll containing the spell secrets of Poison Dart. Read ('E') to master the spell.",
-            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "POISON_DART"
-        },
-        {
             name: "Scroll of Teleport", type: "SCROLL", rarity: "UNCOMMON",
             description: "Ancient scroll containing the spell secrets of Teleport. Read ('E') to master the spell.",
             atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "TELEPORT"
         },
+        {
+            name: "Scroll of Shielding Ward", type: "SCROLL", rarity: "UNCOMMON",
+            description: "Ancient scroll containing the spell secrets of Shielding Ward. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "SHIELDING_WARD"
+        },
+        {
+            name: "Scroll of Thunderbolt", type: "SCROLL", rarity: "UNCOMMON",
+            description: "Ancient scroll containing the spell secrets of Thunderbolt. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "THUNDERBOLT"
+        },
 
         // ==========================================
-        // 3. RARE ITEMS
+        // 3. RARE ITEMS (Historical & Religious Artifacts)
         // ==========================================
         {
-            name: "Mithril Claymore", type: "SWORD", rarity: "RARE",
-            description: "Lightweight yet exceptionally strong mithril sword.",
-            atk: 28, def: 8, hp: 0, mp: 0
+            name: "Zulfiqar of Ali", type: "SWORD", rarity: "RARE",
+            description: "Legendary double-pointed scimitar from ancient Near Eastern history.",
+            atk: 32, def: 6, hp: 20, mp: 20
         },
         {
-            name: "Dragon Piercer", type: "LANCE", rarity: "RARE",
-            description: "Toughened lance crafted to pierce draconian scales.",
-            atk: 34, def: 5, hp: 0, mp: 0
+            name: "Ron Spear of Arthur", type: "LANCE", rarity: "RARE",
+            description: "Heavy thrusting spear wielded alongside Excalibur by King Arthur.",
+            atk: 35, def: 5, hp: 30, mp: 0
         },
         {
-            name: "Berserker Waraxe", type: "AXE", rarity: "RARE",
-            description: "Massive waraxe infused with berserker fury.",
-            atk: 38, def: 0, hp: 40, mp: 0
+            name: "Vajra of Indra", type: "AXE", rarity: "RARE",
+            description: "Ritual thunderbolt axe representing firmness of spirit and lightning power.",
+            atk: 38, def: 4, hp: 25, mp: 35
         },
         {
-            name: "Mithril Coif", type: "HELMET", rarity: "RARE",
-            description: "Woven mithril mesh offering superior protection.",
-            atk: 0, def: 24, hp: 50, mp: 0
+            name: "Menorah of Solomon", type: "HELMET", rarity: "RARE",
+            description: "Seven-lamp golden crown radiating holy illumination in dark caverns.",
+            atk: 5, def: 25, hp: 50, mp: 40
         },
         {
-            name: "Plate of Valor", type: "ARMOR", rarity: "RARE",
-            description: "Full plate armor worn by high commanders.",
-            atk: 0, def: 35, hp: 80, mp: 0
+            name: "Ankh of Osiris", type: "RING", rarity: "RARE",
+            description: "Egyptian sacred key of life granting health regen and divine protection.",
+            atk: 8, def: 12, hp: 60, mp: 50
         },
         {
-            name: "Opal Ring of Mana", type: "RING", rarity: "RARE",
-            description: "Radiant opal gem ring pulsing with raw magic energy.",
-            atk: 10, def: 8, hp: 0, mp: 60
+            name: "Caduceus of Hermes", type: "LANCE", rarity: "RARE",
+            description: "Herald's staff entwined with twin serpents, granting swift magic movement.",
+            atk: 30, def: 8, hp: 30, mp: 60
+        },
+        {
+            name: "Sandals of Hermes", type: "RING", rarity: "RARE",
+            description: "Winged talaria footwear granting divine swiftness and mana focus.",
+            atk: 10, def: 10, hp: 40, mp: 75
+        },
+        {
+            name: "Draupnir Ring", type: "RING", rarity: "RARE",
+            description: "Norse gold ring forged by dwarves that multiplies wielder prosperity.",
+            atk: 12, def: 12, hp: 50, mp: 80
         },
         {
             name: "Scroll of Arcane Nova", type: "SCROLL", rarity: "RARE",
@@ -184,14 +222,48 @@ export class ItemSystem {
             atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "ARCANE_NOVA"
         },
         {
-            name: "Scroll of Shielding Ward", type: "SCROLL", rarity: "RARE",
-            description: "Ancient scroll containing the spell secrets of Shielding Ward. Read ('E') to master the spell.",
-            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "SHIELDING_WARD"
+            name: "Scroll of Divine Smite", type: "SCROLL", rarity: "RARE",
+            description: "Ancient scroll containing the spell secrets of Divine Smite. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "DIVINE_SMITE"
+        },
+        {
+            name: "Scroll of Miasma Cloud", type: "SCROLL", rarity: "RARE",
+            description: "Ancient scroll containing the spell secrets of Miasma Cloud. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "MIASMA_CLOUD"
+        },
+        {
+            name: "Scroll of Astral Drain", type: "SCROLL", rarity: "RARE",
+            description: "Ancient scroll containing the spell secrets of Astral Drain. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "ASTRAL_DRAIN"
         },
 
         // ==========================================
-        // 4. EPIC HISTORIC ITEMS
+        // 4. EPIC HISTORIC & RELIGIOUS RELICS
         // ==========================================
+        {
+            name: "Spear of Longinus", type: "LANCE", rarity: "EPIC",
+            description: "The Holy Spear of destiny that pierced the divine side. Ignores defense.",
+            atk: 55, def: 5, hp: 30, mp: 50,
+            passive: { name: "Armor Piercer", description: "Bypasses 25% of target DEF", atkBonusPct: 0.15 }
+        },
+        {
+            name: "Cross of Constantine", type: "ARMOR", rarity: "EPIC",
+            description: "Imperial golden breastplate inscribed with the sacred Chi-Rho emblem.",
+            atk: 10, def: 50, hp: 110, mp: 40,
+            passive: { name: "Imperium Guard", description: "+25% DEF & +3 HP regen per turn", defBonusPct: 0.25, hpRegenBonus: 3 }
+        },
+        {
+            name: "Sudarshana Chakra", type: "RING", rarity: "EPIC",
+            description: "Spinning serrated divine disc of Lord Vishnu representing cosmic law.",
+            atk: 25, def: 15, hp: 70, mp: 90,
+            passive: { name: "Chakra Vortex", description: "+20% ATK damage bonus", atkBonusPct: 0.20 }
+        },
+        {
+            name: "Staff of Moses", type: "LANCE", rarity: "EPIC",
+            description: "Sacred wooden staff that parted the Red Sea and struck water from rock.",
+            atk: 40, def: 15, hp: 80, mp: 120,
+            passive: { name: "Parting Seas", description: "Reduces spell mana cost by 25%", manaCostDiscount: 0.25 }
+        },
         {
             name: "Excalibur", type: "SWORD", rarity: "EPIC",
             description: "The legendary sword of King Arthur. Radiates divine authority.",
@@ -203,18 +275,6 @@ export class ItemSystem {
             description: "Forged by master blacksmith Okazaki Masamune with razor sharpness.",
             atk: 50, def: 8, hp: 40, mp: 40,
             passive: { name: "Vanish Edge", description: "+20% ATK damage bonus", atkBonusPct: 0.20 }
-        },
-        {
-            name: "Lance of Longinus", type: "LANCE", rarity: "EPIC",
-            description: "The Holy Spear of destiny. Pierces through any creature's armor.",
-            atk: 55, def: 5, hp: 30, mp: 50,
-            passive: { name: "Armor Piercer", description: "Bypasses 25% of target DEF", atkBonusPct: 0.12 }
-        },
-        {
-            name: "Labrys of Minos", type: "AXE", rarity: "EPIC",
-            description: "Double-headed battleaxe wielded by the ancient Minoan royal guards.",
-            atk: 60, def: 0, hp: 80, mp: 0,
-            passive: { name: "Cleave", description: "+25% raw physical power", atkBonusPct: 0.25 }
         },
         {
             name: "Helm of Hades", type: "HELMET", rarity: "EPIC",
@@ -234,10 +294,49 @@ export class ItemSystem {
             atk: 20, def: 20, hp: 80, mp: 120,
             passive: { name: "Arcane Mastery", description: "+3 MP restored on every step", mpRegenBonus: 3 }
         },
+        {
+            name: "Scroll of Ragnarok Strike", type: "SCROLL", rarity: "EPIC",
+            description: "Ancient scroll containing the spell secrets of Ragnarok Strike. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "RAGNAROK_STRIKE"
+        },
+        {
+            name: "Scroll of Holy Light", type: "SCROLL", rarity: "EPIC",
+            description: "Ancient scroll containing the spell secrets of Holy Light. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "HOLY_LIGHT"
+        },
+        {
+            name: "Scroll of Time Distortion", type: "SCROLL", rarity: "EPIC",
+            description: "Ancient scroll containing the spell secrets of Time Distortion. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "TIME_DISTORTION"
+        },
 
         // ==========================================
-        // 5. LEGENDARY RELICS
+        // 5. LEGENDARY DIVINE ARTIFACTS
         // ==========================================
+        {
+            name: "Trishula of Shiva", type: "LANCE", rarity: "LEGENDARY",
+            description: "The sacred trident of Lord Shiva symbolizing creation, preservation, and destruction.",
+            atk: 95, def: 35, hp: 180, mp: 140,
+            passive: { name: "Destroyer Strike", description: "+40% ATK & lifesteal 18%", atkBonusPct: 0.40, lifestealPct: 0.18 }
+        },
+        {
+            name: "Book of Thoth", type: "RING", rarity: "LEGENDARY",
+            description: "Sacred papyrus bound in gold containing supreme magic secrets of Egyptian lore.",
+            atk: 40, def: 40, hp: 150, mp: 300,
+            passive: { name: "Thoth Wisdom", description: "+35% spell power & 45% MP discount", manaCostDiscount: 0.45, mpRegenBonus: 5 }
+        },
+        {
+            name: "Holy Grail", type: "RING", rarity: "LEGENDARY",
+            description: "The sacred vessel granting eternal vitality and limitless holy energy.",
+            atk: 30, def: 45, hp: 250, mp: 200,
+            passive: { name: "Chalice Aura", description: "+6 HP & +4 MP regen per turn", hpRegenBonus: 6, mpRegenBonus: 4 }
+        },
+        {
+            name: "Shroud of Turin", type: "ARMOR", rarity: "LEGENDARY",
+            description: "Sacred linen cloth granting invulnerability aura against darkness.",
+            atk: 25, def: 100, hp: 350, mp: 180,
+            passive: { name: "Resurrection Light", description: "+40% DEF & +5 HP regen per turn", defBonusPct: 0.40, hpRegenBonus: 5 }
+        },
         {
             name: "Mjolnir", type: "AXE", rarity: "LEGENDARY",
             description: "The hammer of Thor, god of thunder. Channels crackling lightning.",
@@ -267,8 +366,37 @@ export class ItemSystem {
             description: "Imperial crown of the Babylonian king who constructed the Hanging Gardens.",
             atk: 40, def: 75, hp: 220, mp: 180,
             passive: { name: "Babel Tower", description: "+30% DEF and +100 Max HP", defBonusPct: 0.30 }
+        },
+        {
+            name: "Scroll of Phoenix Flame", type: "SCROLL", rarity: "LEGENDARY",
+            description: "Ancient scroll containing the spell secrets of Phoenix Flame. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "PHOENIX_FLAME"
         }
     ];
+
+    public static generateItemForRarity(rarity: ItemRarity, floor: number): ItemData {
+        const candidates = this.ITEMS.filter(i => i.rarity === rarity);
+        const template = candidates.length > 0
+            ? candidates[Math.floor(Math.random() * candidates.length)]
+            : this.ITEMS[0];
+
+        const floorScaling = 1.0 + (floor - 1) * 0.04;
+
+        return {
+            id: `${template.name.replace(/\s+/g, '_')}_${Date.now()}_${Math.random()}`,
+            name: template.name,
+            type: template.type,
+            rarity: template.rarity,
+            description: template.description,
+            atkBonus: Math.round(template.atk * floorScaling),
+            defBonus: Math.round(template.def * floorScaling),
+            hpBonus: Math.round(template.hp * floorScaling),
+            mpBonus: Math.round(template.mp * floorScaling),
+            spellToLearn: template.spellToLearn,
+            passive: template.passive,
+            rarityColor: RARITY_COLORS[template.rarity]
+        };
+    }
 
     public static generateItemForFloor(floor: number): ItemData {
         // Rarity spawn probability distribution based on current floor (Matching Bestiary logic)
@@ -325,28 +453,6 @@ export class ItemSystem {
             rand -= item.weight;
         }
 
-        // Filter candidate item templates matching the chosen rarity
-        const candidates = this.ITEMS.filter(i => i.rarity === chosenRarity);
-        const template = candidates.length > 0 
-            ? candidates[Math.floor(Math.random() * candidates.length)]
-            : this.ITEMS[0];
-
-        // Slight stat scaling based on floor level
-        const floorScaling = 1.0 + (floor - 1) * 0.04;
-
-        return {
-            id: `${template.name.replace(/\s+/g, '_')}_${Date.now()}_${Math.random()}`,
-            name: template.name,
-            type: template.type,
-            rarity: template.rarity,
-            description: template.description,
-            atkBonus: Math.round(template.atk * floorScaling),
-            defBonus: Math.round(template.def * floorScaling),
-            hpBonus: Math.round(template.hp * floorScaling),
-            mpBonus: Math.round(template.mp * floorScaling),
-            spellToLearn: template.spellToLearn,
-            passive: template.passive,
-            rarityColor: RARITY_COLORS[template.rarity]
-        };
+        return this.generateItemForRarity(chosenRarity, floor);
     }
 }

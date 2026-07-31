@@ -50,9 +50,25 @@ export class PauseOverlay extends Phaser.Scene {
 
         this.input.keyboard?.on('keydown-ENTER', () => this.resume());
         this.input.keyboard?.on('keydown-ESC', () => this.resume());
+        this.input.keyboard?.on('keydown-Z', () => {
+            this.openStats();
+        });
 
         this.scale.on('resize', (gameSize: Phaser.Structs.Size) => {
             this.container.setPosition(gameSize.width / 2, gameSize.height / 2);
+        });
+    }
+
+    private openStats() {
+        if (!this.player) return;
+        this.scene.stop('PauseOverlay');
+        this.scene.launch('StatsOverlay', {
+            player: this.player,
+            floor: this.floor,
+            difficulty: this.difficulty,
+            onClose: () => {
+                this.scene.resume('Game');
+            }
         });
     }
 
@@ -60,7 +76,7 @@ export class PauseOverlay extends Phaser.Scene {
         this.container.removeAll(true);
 
         const w = 520;
-        const h = 360;
+        const h = 420;
 
         // Modal Frame Card
         const panel = this.add.graphics();
@@ -70,12 +86,12 @@ export class PauseOverlay extends Phaser.Scene {
         panel.strokeRoundedRect(-w / 2, -h / 2, w, h, 14);
         this.container.add(panel);
 
-        const title = this.add.text(0, -h / 2 + 40, '⏸️ GAME PAUSED', {
+        const title = this.add.text(0, -h / 2 + 38, '⏸️ GAME PAUSED', {
             fontFamily: 'system-ui, sans-serif', fontSize: '32px', color: '#38bdf8', fontStyle: 'bold', stroke: '#000000', strokeThickness: 6
         }).setOrigin(0.5);
 
         const lvlStr = this.player ? `Hero Level ${this.player.level}` : 'Hero';
-        const subtext = this.add.text(0, -h / 2 + 85, `Floor ${this.floor} / 30 • ${this.difficulty} Difficulty • ${lvlStr}`, {
+        const subtext = this.add.text(0, -h / 2 + 82, `Floor ${this.floor} / 30 • ${this.difficulty} Difficulty • ${lvlStr}`, {
             fontFamily: 'system-ui, sans-serif', fontSize: '14px', color: '#94a3b8', fontStyle: 'bold'
         }).setOrigin(0.5);
 
@@ -88,6 +104,12 @@ export class PauseOverlay extends Phaser.Scene {
                 color: 0x059669,
                 stroke: 0x34d399,
                 action: () => this.resume()
+            },
+            {
+                label: '📊 HERO STATS & RECORD [Z]',
+                color: 0x0284c7,
+                stroke: 0x38bdf8,
+                action: () => this.openStats()
             },
             {
                 label: '💾 SAVE & LOAD GAME',
@@ -123,9 +145,9 @@ export class PauseOverlay extends Phaser.Scene {
             }
         ];
 
-        let startY = -h / 2 + 145;
+        let startY = -h / 2 + 130;
         buttons.forEach(btn => {
-            const btnBg = this.add.rectangle(0, startY, 320, 46, btn.color, 1.0).setInteractive({ useHandCursor: true });
+            const btnBg = this.add.rectangle(0, startY, 330, 44, btn.color, 1.0).setInteractive({ useHandCursor: true });
             btnBg.setStrokeStyle(2, btn.stroke);
 
             const btnTxt = this.add.text(0, startY, btn.label, {
@@ -138,10 +160,10 @@ export class PauseOverlay extends Phaser.Scene {
             });
 
             this.container.add([btnBg, btnTxt]);
-            startY += 62;
+            startY += 58;
         });
 
-        const closeHint = this.add.text(0, h / 2 - 25, '[Press ENTER / ESC to Resume Game]', {
+        const closeHint = this.add.text(0, h / 2 - 22, '[Press ENTER / ESC / Z to Resume Game]', {
             fontFamily: 'system-ui, sans-serif', fontSize: '12px', color: '#64748b', fontStyle: 'bold'
         }).setOrigin(0.5);
         this.container.add(closeHint);

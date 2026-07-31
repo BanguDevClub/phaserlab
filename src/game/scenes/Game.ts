@@ -152,6 +152,7 @@ export class Game extends Scene {
         this.hud.getInventoryBtn().on('pointerdown', () => this.openInventory());
         this.hud.getMagicBtn().on('pointerdown', () => this.openMagic());
         this.hud.getWaitBtn().on('pointerdown', () => this.handleWait());
+        this.hud.getStatsBtn().on('pointerdown', () => this.openStats());
         this.hud.getPauseBtn().on('pointerdown', () => this.openPauseMenu());
 
         // Setup Keyboard Inputs
@@ -187,6 +188,7 @@ export class Game extends Scene {
         // Action Keys
         keyboard.on('keydown-E', () => this.openInventory());
         keyboard.on('keydown-Q', () => this.openMagic());
+        keyboard.on('keydown-Z', () => this.openStats());
         keyboard.on('keydown-SPACE', () => this.handleWait());
         keyboard.on('keydown-ENTER', () => this.openPauseMenu());
         keyboard.on('keydown-ESC', () => this.openPauseMenu());
@@ -247,7 +249,7 @@ export class Game extends Scene {
     }
 
     private openInventory() {
-        if (this.scene.isActive('InventoryOverlay') || this.scene.isActive('PauseOverlay')) return;
+        if (this.scene.isActive('InventoryOverlay') || this.scene.isActive('PauseOverlay') || this.scene.isActive('StatsOverlay')) return;
         this.scene.pause();
         this.scene.launch('InventoryOverlay', {
             player: this.player,
@@ -259,7 +261,7 @@ export class Game extends Scene {
     }
 
     private openMagic() {
-        if (this.scene.isActive('MagicOverlay') || this.scene.isActive('PauseOverlay')) return;
+        if (this.scene.isActive('MagicOverlay') || this.scene.isActive('PauseOverlay') || this.scene.isActive('StatsOverlay')) return;
         this.scene.pause();
         this.scene.launch('MagicOverlay', {
             player: this.player,
@@ -275,8 +277,22 @@ export class Game extends Scene {
         });
     }
 
+    private openStats() {
+        if (this.scene.isActive('StatsOverlay') || this.scene.isActive('PauseOverlay') || this.scene.isActive('InventoryOverlay') || this.scene.isActive('MagicOverlay')) return;
+        this.scene.pause();
+        this.scene.launch('StatsOverlay', {
+            player: this.player,
+            floor: this.currentFloor,
+            difficulty: this.difficulty,
+            onClose: () => {
+                this.scene.resume();
+                this.redrawAll();
+            }
+        });
+    }
+
     private openPauseMenu() {
-        if (this.scene.isActive('PauseOverlay') || this.scene.isActive('SaveOverlay') || this.scene.isActive('InventoryOverlay') || this.scene.isActive('MagicOverlay')) return;
+        if (this.scene.isActive('PauseOverlay') || this.scene.isActive('SaveOverlay') || this.scene.isActive('InventoryOverlay') || this.scene.isActive('MagicOverlay') || this.scene.isActive('StatsOverlay')) return;
         this.scene.pause();
         this.scene.launch('PauseOverlay', {
             player: this.player,
@@ -319,6 +335,7 @@ export class Game extends Scene {
         if (foundIdx !== -1) {
             const drop = this.droppedItems[foundIdx];
             this.player.inventory.push(drop.item);
+            this.player.itemsPickedUp++;
             this.droppedItems.splice(foundIdx, 1);
             AudioManager.getInstance().playItemPickup();
             this.eventLog.addMessage(`🎒 Picked up [${drop.item.name}]!`);

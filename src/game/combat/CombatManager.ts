@@ -49,6 +49,9 @@ export class CombatManager {
             const damage = Math.max(1, Math.round(player.getEffectiveAtk() - monster.def * 0.5));
             const dealt = monster.takeDamage(damage);
 
+            // Track damage dealt stat
+            player.totalDamageDealt += dealt;
+
             // Handle lifesteal passive if equipped
             let lifestealMsg = '';
             Object.values(player.equipment).forEach(item => {
@@ -62,6 +65,7 @@ export class CombatManager {
 
             if (!monster.isAlive()) {
                 audio.playHit();
+                player.totalMonstersKilled++;
                 const expGained = Math.round(monster.expReward * difficultyMult);
                 result.logMessages.push(`[${monster.template.rarity}] ${monster.name} was slain! +${expGained} EXP.`);
                 
@@ -71,14 +75,17 @@ export class CombatManager {
                     result.logMessages.push(`★ LEVEL UP! Hero is now Level ${player.level}! Stats increased!`);
                 }
 
-                // Rarer drop item loot check (25% chance * difficultyMult)
-                if (Math.random() < 0.25 * difficultyMult) {
-                    const item = ItemSystem.generateItemForFloor(grid.floor);
+                // Monster item drop check (1/5 chance: 20%. 90% same rarity, 10% higher rarity)
+                if (Math.random() < 0.20) {
+                    const roll = Math.random();
+                    const targetRarity = roll < 0.90 ? monster.template.rarity : ItemSystem.getHigherRarity(monster.template.rarity);
+                    const item = ItemSystem.generateItemForRarity(targetRarity, grid.floor);
                     result.droppedItems.push({ item, x: monster.x, y: monster.y });
-                    result.logMessages.push(`Dropped [${item.name}] at (${monster.x}, ${monster.y}).`);
+                    result.logMessages.push(`🎁 Slain monster dropped [${item.rarity}] ${item.name} at (${monster.x}, ${monster.y})!`);
                 }
             }
 
+            player.totalTurns++;
             result.turnPassed = true;
         } else {
             // Movement to floor tile
@@ -91,6 +98,7 @@ export class CombatManager {
             player.y = targetY;
             player.onWalkStep();
             AudioManager.getInstance().playMove();
+            player.totalTurns++;
             result.playerMoved = true;
             result.turnPassed = true;
 
@@ -107,6 +115,7 @@ export class CombatManager {
 
     public static executePlayerWait(player: Player): CombatActionResult {
         player.onWaitTurn();
+        player.totalTurns++;
         AudioManager.getInstance().playMove();
         return {
             playerMoved: false,
@@ -147,11 +156,15 @@ export class CombatManager {
             return result;
         }
 
+        // Spell MP Power Scaling: Player's total Max MP boosts spell power dynamically!
+        const mpScaleMult = 1.0 + (player.getEffectiveMaxMp() / 100) * 0.4;
         const masteryPowerMult = 1 + 0.25 * (spellRank - 1);
-        const effPower = Math.round(spell.power * masteryPowerMult);
+        const finalPower = Math.round(spell.power * masteryPowerMult * mpScaleMult);
 
         const audio = AudioManager.getInstance();
         player.currentMp -= cost;
+        player.spellsCast++;
+        player.totalTurns++;
         audio.playMagicCast();
 
         if (spell.type === 'TELEPORT') {
@@ -177,17 +190,17 @@ export class CombatManager {
         }
 
         if (spell.type === 'HEAL') {
-            const healed = player.heal(effPower + player.level * 5);
+            const healed = player.heal(finalPower + player.level * 5);
             audio.playHeal();
-            result.logMessages.push(`Hero cast ${spell.name} (Rank ${spellRank}) restoring ${healed} HP!`);
+            result.logMessages.push(`Hero cast ${spell.name} (Rank ${spellRank}, MP Boosted) restoring ${healed} HP!`);
             result.turnPassed = true;
             return result;
         }
 
         if (spell.type === 'BUFF') {
-            player.def += effPower;
+            player.def += finalPower;
             audio.playHeal();
-            result.logMessages.push(`Hero cast ${spell.name} (Rank ${spellRank}), granting +${effPower} DEF!`);
+            result.logMessages.push(`Hero cast ${spell.name} (Rank ${spellRank}, MP Boosted), granting +${finalPower} DEF!`);
             result.turnPassed = true;
             return result;
         }
@@ -203,8 +216,9 @@ export class CombatManager {
         }
 
         targetMonsters.forEach(m => {
-            const rawDmg = effPower + Math.round(player.getEffectiveAtk() * 0.4);
+            const rawDmg = finalPower + Math.round(player.getEffectiveAtk() * 0.4);
             const dealt = m.takeDamage(rawDmg);
+            player.totalDamageDealt += dealt;
             result.logMessages.push(`${spell.name} [Rank ${spellRank}] blasted [${m.template.rarity}] ${m.name} for ${dealt} magic damage!`);
 
             if (spell.statusEffect) {
@@ -213,14 +227,18 @@ export class CombatManager {
             }
 
             if (!m.isAlive()) {
+                player.totalMonstersKilled++;
                 const expGained = Math.round(m.expReward * difficultyMult);
                 result.logMessages.push(`[${m.template.rarity}] ${m.name} disintegrated! +${expGained} EXP.`);
                 if (player.gainExp(expGained)) {
                     audio.playLevelUp();
                     result.logMessages.push(`★ LEVEL UP! Hero is now Level ${player.level}!`);
                 }
-                if (Math.random() < 0.25 * difficultyMult) {
-                    const item = ItemSystem.generateItemForFloor(grid.floor);
+                // Monster item drop check on spell kill (1/5 chance: 20%)
+                if (Math.random() < 0.20) {
+                    const roll = Math.random();
+                    const targetRarity = roll < 0.90 ? m.template.rarity : ItemSystem.getHigherRarity(m.template.rarity);
+                    const item = ItemSystem.generateItemForRarity(targetRarity, grid.floor);
                     result.droppedItems.push({ item, x: m.x, y: m.y });
                 }
             }
@@ -261,6 +279,7 @@ export class CombatManager {
                     const dmg = m.takeDamage(s.power);
                     logs.push(`[${m.template.rarity}] ${m.name} suffers ${dmg} ${s.type.toLowerCase()} damage!`);
                     if (!m.isAlive()) {
+                        player.totalMonstersKilled++;
                         logs.push(`[${m.template.rarity}] ${m.name} succumbed to ${s.type.toLowerCase()}!`);
                         player.gainExp(m.expReward * difficultyMult);
                     }

@@ -43,6 +43,7 @@ export class HUD {
     private btnInv: Phaser.GameObjects.Container;
     private btnMagic: Phaser.GameObjects.Container;
     private btnWait: Phaser.GameObjects.Container;
+    private btnStats: Phaser.GameObjects.Container;
     private btnPause: Phaser.GameObjects.Container;
 
     constructor(scene: Phaser.Scene) {
@@ -115,9 +116,10 @@ export class HUD {
         this.btnInv = this.createActionButton(15, 52, 'Inventory', '[E]', 0x0284c7, 0x38bdf8);
         this.btnMagic = this.createActionButton(155, 52, 'Magic Spells', '[Q]', 0x7c3aed, 0xc084fc);
         this.btnWait = this.createActionButton(305, 52, 'Wait Turn', '[Space]', 0x059669, 0x34d399);
-        this.btnPause = this.createActionButton(455, 52, 'Pause Menu', '[Enter]', 0xd97706, 0xfacc15);
+        this.btnStats = this.createActionButton(455, 52, 'Hero Stats', '[Z]', 0x0369a1, 0x38bdf8);
+        this.btnPause = this.createActionButton(605, 52, 'Pause Menu', '[Enter]', 0xd97706, 0xfacc15);
 
-        this.container.add([this.btnInv, this.btnMagic, this.btnWait, this.btnPause]);
+        this.container.add([this.btnInv, this.btnMagic, this.btnWait, this.btnStats, this.btnPause]);
 
         // 5. Minimap Setup
         this.minimapContainer = scene.add.container(0, 0);
@@ -147,7 +149,7 @@ export class HUD {
 
     private createActionButton(x: number, y: number, label: string, shortcut: string, color: number, strokeColor: number): Phaser.GameObjects.Container {
         const c = this.scene.add.container(x, y);
-        const w = 130;
+        const w = 135;
         const h = 32;
 
         const bg = this.scene.add.graphics();
@@ -309,5 +311,6 @@ export class HUD {
     public getInventoryBtn(): Phaser.GameObjects.GameObject { return this.btnInv.list[2]; }
     public getMagicBtn(): Phaser.GameObjects.GameObject { return this.btnMagic.list[2]; }
     public getWaitBtn(): Phaser.GameObjects.GameObject { return this.btnWait.list[2]; }
+    public getStatsBtn(): Phaser.GameObjects.GameObject { return this.btnStats.list[2]; }
     public getPauseBtn(): Phaser.GameObjects.GameObject { return this.btnPause.list[2]; }
 }

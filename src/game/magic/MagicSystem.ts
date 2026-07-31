@@ -40,11 +40,38 @@ export const SPELL_CATALOG: Record<string, Spell> = {
         statusEffect: 'POISON',
         power: 18
     },
+    DIVINE_SMITE: {
+        id: 'DIVINE_SMITE',
+        name: 'Divine Smite',
+        description: 'Calls down holy wrath upon a single enemy, dealing massive holy damage.',
+        manaCost: 35,
+        range: 5,
+        type: 'DAMAGE',
+        power: 48
+    },
+    THUNDERBOLT: {
+        id: 'THUNDERBOLT',
+        name: 'Thunderbolt',
+        description: 'Strikes a single foe with concentrated lightning from the heavens.',
+        manaCost: 30,
+        range: 6,
+        type: 'DAMAGE',
+        power: 42
+    },
+    ASTRAL_DRAIN: {
+        id: 'ASTRAL_DRAIN',
+        name: 'Astral Drain',
+        description: 'Siphons life and magic from a single target into wielder reserves.',
+        manaCost: 25,
+        range: 4,
+        type: 'DAMAGE',
+        power: 30
+    },
     TELEPORT: {
         id: 'TELEPORT',
         name: 'Flash Teleport',
         description: 'Instantaneously warps the wielder to a safe floor tile in the dungeon.',
-        manaCost: 30,
+        manaCost: 28,
         range: 0,
         type: 'TELEPORT',
         power: 0
@@ -58,15 +85,6 @@ export const SPELL_CATALOG: Record<string, Spell> = {
         type: 'HEAL',
         power: 45
     },
-    ARCANE_NOVA: {
-        id: 'ARCANE_NOVA',
-        name: 'Arcane Nova',
-        description: 'Explodes outward with raw arcane energy, hitting all adjacent enemies.',
-        manaCost: 35,
-        range: 2,
-        type: 'AOE',
-        power: 32
-    },
     SHIELDING_WARD: {
         id: 'SHIELDING_WARD',
         name: 'Shielding Ward',
@@ -74,6 +92,63 @@ export const SPELL_CATALOG: Record<string, Spell> = {
         manaCost: 20,
         range: 0,
         type: 'BUFF',
-        power: 15
+        power: 18
+    },
+    PHOENIX_FLAME: {
+        id: 'PHOENIX_FLAME',
+        name: 'Phoenix Flame',
+        description: 'Envelops the wielder in sacred flames, healing HP and heavily buffing DEF.',
+        manaCost: 45,
+        range: 0,
+        type: 'HEAL',
+        power: 65
+    },
+    ARCANE_NOVA: {
+        id: 'ARCANE_NOVA',
+        name: 'Arcane Nova',
+        description: 'Explodes outward with raw arcane energy, hitting all adjacent enemies.',
+        manaCost: 35,
+        range: 2,
+        type: 'AOE',
+        power: 35
+    },
+    RAGNAROK_STRIKE: {
+        id: 'RAGNAROK_STRIKE',
+        name: 'Ragnarok Strike',
+        description: 'Unleashes a apocalyptic blast burning all enemies in a wide radius.',
+        manaCost: 55,
+        range: 3,
+        type: 'AOE',
+        statusEffect: 'BURN',
+        power: 60
+    },
+    HOLY_LIGHT: {
+        id: 'HOLY_LIGHT',
+        name: 'Holy Light Nova',
+        description: 'Emits a blinding pulse of sacred energy, damaging surrounding enemies while healing.',
+        manaCost: 40,
+        range: 2,
+        type: 'AOE',
+        power: 38
+    },
+    MIASMA_CLOUD: {
+        id: 'MIASMA_CLOUD',
+        name: 'Miasma Cloud',
+        description: 'Summons a toxic cloud that poisons all foes caught within its range.',
+        manaCost: 38,
+        range: 3,
+        type: 'AOE',
+        statusEffect: 'POISON',
+        power: 32
+    },
+    TIME_DISTORTION: {
+        id: 'TIME_DISTORTION',
+        name: 'Time Distortion',
+        description: 'Distorts temporal flow around nearby enemies, dealing damage and freezing them.',
+        manaCost: 50,
+        range: 2,
+        type: 'AOE',
+        statusEffect: 'FREEZE',
+        power: 40
     }
 };

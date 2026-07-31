@@ -4,7 +4,7 @@
 [![TypeScript 5.7](https://img.shields.io/badge/Language-TypeScript%205.7-3178c6.svg)](https://www.typescriptlang.org/)
 [![Vite 6](https://img.shields.io/badge/Bundler-Vite%206-646cff.svg)](https://vitejs.dev/)
 
-**PhaserLab** is an expansive, turn-based 2D Rogue-like RPG featuring 30 procedurally generated labyrinth floors, a 50-monster Bestiary with 5 rarity tiers, item/spell mastery systems, local save management, and responsive fullscreen gameplay.
+**PhaserLab** is an expansive, turn-based 2D Rogue-like RPG featuring 30 procedurally generated labyrinth floors, a 50-monster Bestiary with 5 rarity tiers, item/spell mastery systems, lifetime run statistics tracking, local save management, and responsive fullscreen gameplay.
 
 ---
 
@@ -17,6 +17,13 @@
   - **Floors 10–19**: 100×100 Crystal Caverns *(Palette: Purple/Amethyst)*
   - **Floors 20–30**: 200×200 Infernal Abyssal Depths *(Palette: Dark Crimson/Obsidian)*
 - **3 Synthesized Zone Soundtracks**: Unique procedural retro synth tracks that automatically switch per zone.
+
+---
+
+### 📊 Hero Character & Run Statistics (`Z` Key)
+- View complete breakdown of Base Stats, Item Stat Bonuses, and Total Effective Stats (HP, MP, ATK, DEF).
+- Inspect equipped items, active passives, and current Item Mastery Ranks.
+- Track lifetime run records: **Total Damage Dealt**, **Monsters Slain**, **Turns Taken**, **Items Picked Up**, **Spells Cast**, **Damage Taken**, and **Health Restored**.
 
 ---
 
@@ -39,7 +46,7 @@ Monsters scale with floor depth and are categorized into 5 explicit rarity tiers
 
 ### 💾 Unlimited Save Manager & Pause Menu
 - **LocalStorage Save Engine**: Save and load your complete game state anytime (hero stats, equipment, inventory, map layout, explored tiles, living monsters, dropped items).
-- **Pause Menu (`ENTER` / `ESC`)**: Quick pause menu to resume game, access saves, adjust settings, or return to the main menu.
+- **Pause Menu (`ENTER` / `ESC`)**: Quick pause menu to resume game, access stats, access saves, adjust settings, or return to the main menu.
 - **Map Exploration Statistic**: Live percentage calculation of floor tiles explored (`MAP X%`).
 
 ---
@@ -52,6 +59,7 @@ Monsters scale with floor depth and are categorized into 5 explicit rarity tiers
 | **Move South / Attack** | `S` or `Down Arrow` |
 | **Move West / Attack** | `A` or `Left Arrow` |
 | **Move East / Attack** | `D` or `Right Arrow` |
+| **Open Hero Stats & Record** | `Z` |
 | **Open Inventory** | `E` |
 | **Open Spellbook** | `Q` |
 | **Wait Turn (Restore HP/MP)** | `Space` |

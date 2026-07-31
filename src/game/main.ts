@@ -4,6 +4,7 @@ import { MainMenu } from './scenes/MainMenu';
 import { Game as MainGame } from './scenes/Game';
 import { InventoryOverlay } from './scenes/InventoryOverlay';
 import { MagicOverlay } from './scenes/MagicOverlay';
+import { StatsOverlay } from './scenes/StatsOverlay';
 import { SaveOverlay } from './scenes/SaveOverlay';
 import { PauseOverlay } from './scenes/PauseOverlay';
 import { GameOver } from './scenes/GameOver';
@@ -27,6 +28,7 @@ const config: Phaser.Types.Core.GameConfig = {
         MainGame,
         InventoryOverlay,
         MagicOverlay,
+        StatsOverlay,
         SaveOverlay,
         PauseOverlay,
         GameOver,

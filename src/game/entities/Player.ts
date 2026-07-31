@@ -27,6 +27,15 @@ export class Player extends Entity {
     public itemMastery: Record<string, number> = {};
     public spellMastery: Record<string, number> = {};
 
+    // Lifetime & Run Statistics Tracking
+    public totalDamageDealt: number = 0;
+    public totalTurns: number = 0;
+    public totalMonstersKilled: number = 0;
+    public itemsPickedUp: number = 0;
+    public spellsCast: number = 0;
+    public totalDamageTaken: number = 0;
+    public totalHealthHealed: number = 0;
+
     // Regeneration counters
     private walkStepCount: number = 0;
     private hpRegenTimer: number = 0;
@@ -41,6 +50,18 @@ export class Player extends Entity {
 
     public override getMaxMpForCap(): number {
         return this.getEffectiveMaxMp();
+    }
+
+    public override takeDamage(amount: number): number {
+        const dealt = super.takeDamage(amount);
+        this.totalDamageTaken += dealt;
+        return dealt;
+    }
+
+    public override heal(amount: number): number {
+        const healed = super.heal(amount);
+        this.totalHealthHealed += healed;
+        return healed;
     }
 
     // Item Mastery helper
@@ -61,6 +82,51 @@ export class Player extends Entity {
     public incrementSpellMastery(spellId: string): number {
         this.spellMastery[spellId] = (this.spellMastery[spellId] || 1) + 1;
         return this.spellMastery[spellId];
+    }
+
+    // Item Stat Bonus Getters
+    public getItemAtkBonus(): number {
+        let bonus = 0;
+        Object.values(this.equipment).forEach(item => {
+            if (item) {
+                const rank = this.getItemMasteryRank(item.name);
+                bonus += item.atkBonus * (1 + 0.20 * (rank - 1));
+            }
+        });
+        return Math.round(bonus);
+    }
+
+    public getItemDefBonus(): number {
+        let bonus = 0;
+        Object.values(this.equipment).forEach(item => {
+            if (item) {
+                const rank = this.getItemMasteryRank(item.name);
+                bonus += item.defBonus * (1 + 0.20 * (rank - 1));
+            }
+        });
+        return Math.round(bonus);
+    }
+
+    public getItemHpBonus(): number {
+        let bonus = 0;
+        Object.values(this.equipment).forEach(item => {
+            if (item) {
+                const rank = this.getItemMasteryRank(item.name);
+                bonus += item.hpBonus * (1 + 0.20 * (rank - 1));
+            }
+        });
+        return Math.round(bonus);
+    }
+
+    public getItemMpBonus(): number {
+        let bonus = 0;
+        Object.values(this.equipment).forEach(item => {
+            if (item) {
+                const rank = this.getItemMasteryRank(item.name);
+                bonus += item.mpBonus * (1 + 0.20 * (rank - 1));
+            }
+        });
+        return Math.round(bonus);
     }
 
     // Calculate effective stats taking base + items + passives + item mastery into account
