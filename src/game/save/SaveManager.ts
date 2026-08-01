@@ -13,6 +13,7 @@ export interface PlayerSaveData {
     currentMp: number;
     atk: number;
     def: number;
+    baseFov?: number;
     level: number;
     exp: number;
     expToNextLevel: number;
@@ -106,6 +107,7 @@ export class SaveManager {
             currentMp: player.currentMp,
             atk: player.atk,
             def: player.def,
+            baseFov: player.baseFov,
             level: player.level,
             exp: player.exp,
             expToNextLevel: player.expToNextLevel,
@@ -206,6 +208,7 @@ export class SaveManager {
         player.currentMp = saveData.currentMp;
         player.atk = saveData.atk;
         player.def = saveData.def;
+        player.baseFov = saveData.baseFov ?? 7;
         player.level = saveData.level;
         player.exp = saveData.exp;
         player.expToNextLevel = saveData.expToNextLevel;

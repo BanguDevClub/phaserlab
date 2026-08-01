@@ -12,6 +12,7 @@ export class Player extends Entity {
     public level: number = 1;
     public exp: number = 0;
     public expToNextLevel: number = 50;
+    public baseFov: number = 7;
 
     public equipment: EquipmentSlots = {
         weapon: null,
@@ -127,6 +128,38 @@ export class Player extends Entity {
             }
         });
         return Math.round(bonus);
+    }
+
+    public getItemFovBonus(): number {
+        let bonus = 0;
+        Object.values(this.equipment).forEach(item => {
+            if (item) {
+                const rank = this.getItemMasteryRank(item.name);
+                const masteryMult = 1 + 0.20 * (rank - 1);
+                if (item.fovBonus) {
+                    bonus += item.fovBonus * masteryMult;
+                }
+                if (item.passive?.fovBonus) {
+                    bonus += item.passive.fovBonus;
+                }
+            }
+        });
+        return Math.round(bonus);
+    }
+
+    public getLevelFovBonus(): number {
+        // FOV increases by +1 every 5 levels
+        return Math.floor(this.level / 5);
+    }
+
+    public getSpellFovBonus(): number {
+        const buff = this.activeStatusEffects.find(s => s.type === 'FAR_SIGHT');
+        return buff ? buff.power : 0;
+    }
+
+    public getEffectiveFov(): number {
+        const total = this.baseFov + this.getLevelFovBonus() + this.getItemFovBonus() + this.getSpellFovBonus();
+        return Math.max(3, Math.min(25, total));
     }
 
     // Calculate effective stats taking base + items + passives + item mastery into account

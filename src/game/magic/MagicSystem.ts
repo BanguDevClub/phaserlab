@@ -5,7 +5,7 @@ export interface Spell {
     manaCost: number;
     range: number;
     type: 'DAMAGE' | 'HEAL' | 'TELEPORT' | 'BUFF' | 'AOE';
-    statusEffect?: 'BURN' | 'POISON' | 'FREEZE';
+    statusEffect?: 'BURN' | 'POISON' | 'FREEZE' | 'FAR_SIGHT';
     power: number;
 }
 
@@ -150,5 +150,25 @@ export const SPELL_CATALOG: Record<string, Spell> = {
         type: 'AOE',
         statusEffect: 'FREEZE',
         power: 40
+    },
+    FAR_SIGHT: {
+        id: 'FAR_SIGHT',
+        name: 'Far Sight',
+        description: 'Unleashes an aura of acute perception, expanding FOV vision radius by +4 for 20 turns.',
+        manaCost: 20,
+        range: 0,
+        type: 'BUFF',
+        statusEffect: 'FAR_SIGHT',
+        power: 4
+    },
+    TRUE_SEEING: {
+        id: 'TRUE_SEEING',
+        name: 'True Seeing',
+        description: 'Channels divine illumination, granting +6 FOV vision radius for 30 turns and boosting DEF.',
+        manaCost: 35,
+        range: 0,
+        type: 'BUFF',
+        statusEffect: 'FAR_SIGHT',
+        power: 6
     }
 };

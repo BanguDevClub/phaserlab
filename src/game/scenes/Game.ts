@@ -138,7 +138,7 @@ export class Game extends Scene {
         this.playerGfx.setPosition(initialPx, initialPy);
 
         // Initial FOV calculate
-        DungeonGenerator.updateVisibility(this.grid, this.player.x, this.player.y, 7);
+        DungeonGenerator.updateVisibility(this.grid, this.player.x, this.player.y, this.player.getEffectiveFov());
 
         // Setup Camera Tracking WITHOUT strict screen edge clamping
         this.cameras.main.removeBounds();

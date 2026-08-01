@@ -30,6 +30,9 @@ export class HUD {
     private defBadge: Phaser.GameObjects.Container;
     private defText: Phaser.GameObjects.Text;
 
+    private fovBadge: Phaser.GameObjects.Container;
+    private fovText: Phaser.GameObjects.Text;
+
     private exploreBadge: Phaser.GameObjects.Container;
     private exploreText: Phaser.GameObjects.Text;
 
@@ -84,23 +87,29 @@ export class HUD {
             fontFamily: 'monospace', fontSize: '13px', color: '#ffffff', fontStyle: 'bold'
         }).setOrigin(0.5);
 
-        // 3. ATK, DEF & MAP EXPLORATION Badges
-        this.atkBadge = this.createBadge(700, 12, 85, 32, 0x9a3412, 0xf97316);
-        this.atkText = scene.add.text(742, 28, 'ATK 18', {
-            fontFamily: 'system-ui, sans-serif', fontSize: '13px', color: '#ffffff', fontStyle: 'bold'
+        // 3. ATK, DEF, FOV & MAP EXPLORATION Badges
+        this.atkBadge = this.createBadge(695, 12, 80, 32, 0x9a3412, 0xf97316);
+        this.atkText = scene.add.text(735, 28, 'ATK 18', {
+            fontFamily: 'system-ui, sans-serif', fontSize: '12px', color: '#ffffff', fontStyle: 'bold'
         }).setOrigin(0.5);
         this.atkBadge.add(this.atkText);
 
-        this.defBadge = this.createBadge(793, 12, 85, 32, 0x0f766e, 0x14b8a6);
-        this.defText = scene.add.text(835, 28, 'DEF 5', {
-            fontFamily: 'system-ui, sans-serif', fontSize: '13px', color: '#ffffff', fontStyle: 'bold'
+        this.defBadge = this.createBadge(780, 12, 80, 32, 0x0f766e, 0x14b8a6);
+        this.defText = scene.add.text(820, 28, 'DEF 5', {
+            fontFamily: 'system-ui, sans-serif', fontSize: '12px', color: '#ffffff', fontStyle: 'bold'
         }).setOrigin(0.5);
         this.defBadge.add(this.defText);
 
+        this.fovBadge = this.createBadge(865, 12, 80, 32, 0x6b21a8, 0xc084fc);
+        this.fovText = scene.add.text(905, 28, 'FOV 7', {
+            fontFamily: 'system-ui, sans-serif', fontSize: '12px', color: '#ffffff', fontStyle: 'bold'
+        }).setOrigin(0.5);
+        this.fovBadge.add(this.fovText);
+
         // Map Exploration Stat Badge
-        this.exploreBadge = this.createBadge(886, 12, 110, 32, 0x0369a1, 0x38bdf8);
-        this.exploreText = scene.add.text(941, 28, 'MAP 0%', {
-            fontFamily: 'system-ui, sans-serif', fontSize: '13px', color: '#ffffff', fontStyle: 'bold'
+        this.exploreBadge = this.createBadge(950, 12, 100, 32, 0x0369a1, 0x38bdf8);
+        this.exploreText = scene.add.text(1000, 28, 'MAP 0%', {
+            fontFamily: 'system-ui, sans-serif', fontSize: '12px', color: '#ffffff', fontStyle: 'bold'
         }).setOrigin(0.5);
         this.exploreBadge.add(this.exploreText);
 
@@ -109,7 +118,7 @@ export class HUD {
             this.hpBarGfx, this.hpText,
             this.mpBarGfx, this.mpText,
             this.expBarGfx, this.expText,
-            this.atkBadge, this.defBadge, this.exploreBadge
+            this.atkBadge, this.defBadge, this.fovBadge, this.exploreBadge
         ]);
 
         // 4. Action Pill Buttons
@@ -219,6 +228,7 @@ export class HUD {
 
         this.atkText.setText(`ATK ${player.getEffectiveAtk()}`);
         this.defText.setText(`DEF ${player.getEffectiveDef()}`);
+        this.fovText.setText(`FOV ${player.getEffectiveFov()}`);
 
         if (grid) {
             const pct = this.calculateExplorationPercentage(grid);

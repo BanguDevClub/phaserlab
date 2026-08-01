@@ -198,9 +198,17 @@ export class CombatManager {
         }
 
         if (spell.type === 'BUFF') {
-            player.def += finalPower;
-            audio.playHeal();
-            result.logMessages.push(`Hero cast ${spell.name} (Rank ${spellRank}, MP Boosted), granting +${finalPower} DEF!`);
+            if (spell.statusEffect === 'FAR_SIGHT') {
+                const duration = 20 * spellRank;
+                const fovPower = spell.power;
+                player.addStatusEffect('FAR_SIGHT', duration, fovPower);
+                audio.playHeal();
+                result.logMessages.push(`Hero cast ${spell.name} (Rank ${spellRank}), granting +${fovPower} FOV Vision Radius for ${duration} turns!`);
+            } else {
+                player.def += finalPower;
+                audio.playHeal();
+                result.logMessages.push(`Hero cast ${spell.name} (Rank ${spellRank}, MP Boosted), granting +${finalPower} DEF!`);
+            }
             result.turnPassed = true;
             return result;
         }
@@ -267,6 +275,10 @@ export class CombatManager {
                 const dmg = player.takeDamage(s.power);
                 logs.push(`Hero suffers ${dmg} Poison tick damage!`);
                 audio.playStatusTick();
+            } else if (s.type === 'FAR_SIGHT') {
+                if (s.duration === 1) {
+                    logs.push(`Hero's Far Sight vision effect has expired.`);
+                }
             }
             s.duration--;
         });
@@ -400,7 +412,7 @@ export class CombatManager {
         });
 
         // Update Line of sight / FOV
-        DungeonGenerator.updateVisibility(grid, player.x, player.y, 7);
+        DungeonGenerator.updateVisibility(grid, player.x, player.y, player.getEffectiveFov());
 
         return logs;
     }

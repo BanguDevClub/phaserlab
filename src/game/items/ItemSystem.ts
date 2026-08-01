@@ -10,6 +10,7 @@ export interface ItemPassive {
     mpRegenBonus?: number;
     lifestealPct?: number;
     manaCostDiscount?: number;
+    fovBonus?: number;
 }
 
 export interface ItemData {
@@ -22,6 +23,7 @@ export interface ItemData {
     defBonus: number;
     hpBonus: number;
     mpBonus: number;
+    fovBonus: number;
     spellToLearn?: string; // For scrolls
     passive?: ItemPassive;
     rarityColor: number;
@@ -36,6 +38,7 @@ export interface ItemTemplate {
     def: number;
     hp: number;
     mp: number;
+    fovBonus?: number;
     spellToLearn?: string;
     passive?: ItemPassive;
 }
@@ -94,6 +97,11 @@ export class ItemSystem {
             atk: 3, def: 0, hp: 0, mp: 20
         },
         {
+            name: "Ring of Eagle Eye", type: "RING", rarity: "COMMON",
+            description: "Engraved silver band granting keen falcon sight (+2 FOV).",
+            atk: 2, def: 2, hp: 0, mp: 10, fovBonus: 2
+        },
+        {
             name: "Scroll of Fireball", type: "SCROLL", rarity: "COMMON",
             description: "Ancient scroll containing the spell secrets of Fireball. Read ('E') to master the spell.",
             atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "FIREBALL"
@@ -107,6 +115,11 @@ export class ItemSystem {
             name: "Scroll of Poison Dart", type: "SCROLL", rarity: "COMMON",
             description: "Ancient scroll containing the spell secrets of Poison Dart. Read ('E') to master the spell.",
             atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "POISON_DART"
+        },
+        {
+            name: "Scroll of Far Sight", type: "SCROLL", rarity: "COMMON",
+            description: "Ancient scroll containing the spell secrets of Far Sight. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "FAR_SIGHT"
         },
 
         // ==========================================
@@ -149,8 +162,13 @@ export class ItemSystem {
         },
         {
             name: "Scarab of Ra", type: "RING", rarity: "UNCOMMON",
-            description: "Egyptian lapis amulet representing rebirth and solar energy.",
-            atk: 5, def: 5, hp: 25, mp: 40
+            description: "Egyptian lapis amulet representing rebirth and solar energy (+1 FOV).",
+            atk: 5, def: 5, hp: 25, mp: 40, fovBonus: 1
+        },
+        {
+            name: "Ring of Far Sight", type: "RING", rarity: "UNCOMMON",
+            description: "Enchanted crystal ring that pierces deep dungeon shadows (+3 FOV).",
+            atk: 4, def: 4, hp: 15, mp: 25, fovBonus: 3
         },
         {
             name: "Scroll of Ice Spike", type: "SCROLL", rarity: "UNCOMMON",
@@ -193,13 +211,19 @@ export class ItemSystem {
         },
         {
             name: "Menorah of Solomon", type: "HELMET", rarity: "RARE",
-            description: "Seven-lamp golden crown radiating holy illumination in dark caverns.",
-            atk: 5, def: 25, hp: 50, mp: 40
+            description: "Seven-lamp golden crown radiating holy illumination in dark caverns (+2 FOV).",
+            atk: 5, def: 25, hp: 50, mp: 40, fovBonus: 2
         },
         {
             name: "Ankh of Osiris", type: "RING", rarity: "RARE",
             description: "Egyptian sacred key of life granting health regen and divine protection.",
             atk: 8, def: 12, hp: 60, mp: 50
+        },
+        {
+            name: "Ring of Starlight", type: "RING", rarity: "RARE",
+            description: "Radiant ring shimmering with starlight that expands vision radius (+4 FOV).",
+            atk: 8, def: 8, hp: 40, mp: 60, fovBonus: 4,
+            passive: { name: "Starlight Aura", description: "+1 Passive FOV & +10% ATK", fovBonus: 1, atkBonusPct: 0.10 }
         },
         {
             name: "Caduceus of Hermes", type: "LANCE", rarity: "RARE",
@@ -236,6 +260,11 @@ export class ItemSystem {
             description: "Ancient scroll containing the spell secrets of Astral Drain. Read ('E') to master the spell.",
             atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "ASTRAL_DRAIN"
         },
+        {
+            name: "Scroll of True Seeing", type: "SCROLL", rarity: "RARE",
+            description: "Ancient scroll containing the spell secrets of True Seeing. Read ('E') to master the spell.",
+            atk: 0, def: 0, hp: 0, mp: 0, spellToLearn: "TRUE_SEEING"
+        },
 
         // ==========================================
         // 4. EPIC HISTORIC & RELIGIOUS RELICS
@@ -257,6 +286,12 @@ export class ItemSystem {
             description: "Spinning serrated divine disc of Lord Vishnu representing cosmic law.",
             atk: 25, def: 15, hp: 70, mp: 90,
             passive: { name: "Chakra Vortex", description: "+20% ATK damage bonus", atkBonusPct: 0.20 }
+        },
+        {
+            name: "Ring of Omniscience", type: "RING", rarity: "EPIC",
+            description: "Relic ring granting vision across unseen dungeon dimensions (+5 FOV).",
+            atk: 15, def: 15, hp: 60, mp: 80, fovBonus: 5,
+            passive: { name: "Divine Sight", description: "+2 Passive FOV & 15% Mana Discount", fovBonus: 2, manaCostDiscount: 0.15 }
         },
         {
             name: "Staff of Moses", type: "LANCE", rarity: "EPIC",
@@ -322,8 +357,8 @@ export class ItemSystem {
         {
             name: "Book of Thoth", type: "RING", rarity: "LEGENDARY",
             description: "Sacred papyrus bound in gold containing supreme magic secrets of Egyptian lore.",
-            atk: 40, def: 40, hp: 150, mp: 300,
-            passive: { name: "Thoth Wisdom", description: "+35% spell power & 45% MP discount", manaCostDiscount: 0.45, mpRegenBonus: 5 }
+            atk: 40, def: 40, hp: 150, mp: 300, fovBonus: 3,
+            passive: { name: "Thoth Wisdom", description: "+2 FOV, 45% MP discount & +5 MP regen", fovBonus: 2, manaCostDiscount: 0.45, mpRegenBonus: 5 }
         },
         {
             name: "Holy Grail", type: "RING", rarity: "LEGENDARY",
@@ -347,7 +382,7 @@ export class ItemSystem {
             name: "Gungnir", type: "LANCE", rarity: "LEGENDARY",
             description: "The spear of Odin that never misses its target once thrown.",
             atk: 85, def: 25, hp: 140, mp: 120,
-            passive: { name: "Odin's Sight", description: "+30% ATK & +2 MP regen on walk", atkBonusPct: 0.30, mpRegenBonus: 2 }
+            passive: { name: "Odin's Sight", description: "+3 FOV Vision, +30% ATK & +2 MP regen", fovBonus: 3, atkBonusPct: 0.30, mpRegenBonus: 2 }
         },
         {
             name: "Cloak of Gilgamesh", type: "ARMOR", rarity: "LEGENDARY",
@@ -392,6 +427,7 @@ export class ItemSystem {
             defBonus: Math.round(template.def * floorScaling),
             hpBonus: Math.round(template.hp * floorScaling),
             mpBonus: Math.round(template.mp * floorScaling),
+            fovBonus: template.fovBonus || 0,
             spellToLearn: template.spellToLearn,
             passive: template.passive,
             rarityColor: RARITY_COLORS[template.rarity]

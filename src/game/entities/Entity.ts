@@ -1,5 +1,5 @@
 export interface StatusEffectState {
-    type: 'BURN' | 'POISON' | 'FREEZE' | 'STUN';
+    type: 'BURN' | 'POISON' | 'FREEZE' | 'STUN' | 'FAR_SIGHT';
     duration: number; // turns remaining
     power: number;
 }
@@ -74,7 +74,7 @@ export abstract class Entity {
         return actualMp;
     }
 
-    public addStatusEffect(type: 'BURN' | 'POISON' | 'FREEZE' | 'STUN', duration: number, power: number) {
+    public addStatusEffect(type: 'BURN' | 'POISON' | 'FREEZE' | 'STUN' | 'FAR_SIGHT', duration: number, power: number) {
         const existing = this.activeStatusEffects.find(s => s.type === type);
         if (existing) {
             existing.duration = Math.max(existing.duration, duration);

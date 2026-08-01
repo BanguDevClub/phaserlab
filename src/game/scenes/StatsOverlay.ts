@@ -92,17 +92,22 @@ export class StatsOverlay extends Phaser.Scene {
         const effDef = this.player.getEffectiveDef();
         const effHp = this.player.getEffectiveMaxHp();
         const effMp = this.player.getEffectiveMaxMp();
+        const effFov = this.player.getEffectiveFov();
 
         const itemAtk = this.player.getItemAtkBonus();
         const itemDef = this.player.getItemDefBonus();
         const itemHp = this.player.getItemHpBonus();
         const itemMp = this.player.getItemMpBonus();
+        const itemFov = this.player.getItemFovBonus();
+        const lvlFov = this.player.getLevelFovBonus();
+        const buffFov = this.player.getSpellFovBonus();
 
         const statLines = [
             `❤️ MAX HEALTH: ${effHp}  (Base: ${this.player.maxHp} | Items: +${itemHp})`,
             `💧 MAX MANA: ${effMp}  (Base: ${this.player.maxMp} | Items: +${itemMp})`,
             `⚔️ ATTACK POWER: ${effAtk}  (Base: ${this.player.atk} | Items: +${itemAtk})`,
-            `🛡️ DEFENSE POWER: ${effDef}  (Base: ${this.player.def} | Items: +${itemDef})`
+            `🛡️ DEFENSE POWER: ${effDef}  (Base: ${this.player.def} | Items: +${itemDef})`,
+            `👁️ VISION (FOV): ${effFov}  (Base: ${this.player.baseFov} | Lvl: +${lvlFov} | Items: +${itemFov}${buffFov > 0 ? ` | Buff: +${buffFov}` : ''})`
         ];
 
         let lineY = startY + 45;
