@@ -387,33 +387,33 @@ export class Bestiary {
         // Rarity spawn probability distribution based on current floor level
         let weights: { rarity: MonsterRarity; weight: number }[] = [];
 
-        if (floor <= 5) {
+        if (floor < 5) {
             weights = [
                 { rarity: 'COMMON', weight: 95 },
                 { rarity: 'UNCOMMON', weight: 4 },
                 { rarity: 'RARE', weight: 1 }
             ];
-        } else if (floor <= 10) {
+        } else if (floor < 10) {
             weights = [
                 { rarity: 'COMMON', weight: 50 },
                 { rarity: 'UNCOMMON', weight: 45 },
                 { rarity: 'RARE', weight: 4 },
                 { rarity: 'EPIC', weight: 1 }
             ];
-        } else if (floor <= 15) {
+        } else if (floor < 15) {
             weights = [
                 { rarity: 'UNCOMMON', weight: 50 },
                 { rarity: 'RARE', weight: 45 },
                 { rarity: 'EPIC', weight: 4 },
                 { rarity: 'LEGENDARY', weight: 1 }
             ];
-        } else if (floor <= 20) {
+        } else if (floor < 20) {
             weights = [
                 { rarity: 'RARE', weight: 55 },
                 { rarity: 'EPIC', weight: 44 },
                 { rarity: 'LEGENDARY', weight: 1 }
             ];
-        } else if (floor <= 25) {
+        } else if (floor < 25) {
             weights = [
                 { rarity: 'EPIC', weight: 70 },
                 { rarity: 'LEGENDARY', weight: 30 }
